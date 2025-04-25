@@ -7,6 +7,19 @@
 
 CodeKids is an interactive web-based educational platform designed to make coding accessible and enjoyable for children. Using a visual, block-based programming approach, CodeKids allows young learners to understand programming concepts without the barriers of syntax and typing.
 
+## 📸 Screenshots
+
+<div align="center">
+  <img src="/client/public/images/screenshots/home-page.png" alt="Home Page" width="80%" />
+  <p><em>Home Page with challenges and achievements</em></p>
+  
+  <img src="/client/public/images/screenshots/challenge-page.png" alt="Challenge Page" width="80%" />
+  <p><em>Challenge page with visual code blocks</em></p>
+  
+  <img src="/client/public/images/screenshots/auth-page.png" alt="Login Page" width="80%" />
+  <p><em>Authentication page for user login and registration</em></p>
+</div>
+
 ## 🌟 Features
 
 - **Visual Block-Based Coding**: Drag and drop programming blocks to create code without typing

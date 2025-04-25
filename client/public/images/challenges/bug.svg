@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="96px" height="96px" viewBox="0 0 96 96" version="1.1" xmlns="http://www.w3.org/2000/svg">
-    <g id="bug-icon" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <rect id="background" fill="#9D174D" opacity="0.1" x="0" y="0" width="96" height="96" rx="12"></rect>
-        <path d="M48,24 C41.3726,24 36,29.3726 36,36 L36,60 C36,66.6274 41.3726,72 48,72 C54.6274,72 60,66.6274 60,60 L60,36 C60,29.3726 54.6274,24 48,24 Z M48,28 C52.4183,28 56,31.5817 56,36 L56,60 C56,64.4183 52.4183,68 48,68 C43.5817,68 40,64.4183 40,60 L40,36 C40,31.5817 43.5817,28 48,28 Z" id="bug-body" fill="#9D174D" fill-rule="nonzero"></path>
-        <path d="M44,32 C42.8954,32 42,32.8954 42,34 C42,35.1046 42.8954,36 44,36 C45.1046,36 46,35.1046 46,34 C46,32.8954 45.1046,32 44,32 Z M52,32 C50.8954,32 50,32.8954 50,34 C50,35.1046 50.8954,36 52,36 C53.1046,36 54,35.1046 54,34 C54,32.8954 53.1046,32 52,32 Z" id="bug-eyes" fill="#000000" fill-rule="nonzero"></path>
-        <path d="M32,20 L36,20 L36,28 L32,28 L32,20 Z M60,20 L64,20 L64,28 L60,28 L60,20 Z M24,36 L32,36 L32,40 L24,40 L24,36 Z M64,36 L72,36 L72,40 L64,40 L64,36 Z M24,56 L32,56 L32,60 L24,60 L24,56 Z M64,56 L72,56 L72,60 L64,60 L64,56 Z M32,68 L36,68 L36,76 L32,76 L32,68 Z M60,68 L64,68 L64,76 L60,76 L60,68 Z" id="bug-legs" fill="#E11D48" fill-rule="nonzero"></path>
-    </g>
+<svg width="96" height="96" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="96" height="96" rx="12" fill="#fef9f9"/>
+  <circle cx="48" cy="48" r="24" fill="#fc8181"/>
+  <circle cx="48" cy="48" r="16" fill="#1a202c"/>
+  <ellipse cx="48" cy="48" rx="10" ry="6" fill="#fc8181"/>
+  <circle cx="40" cy="40" r="4" fill="#fff"/>
+  <circle cx="56" cy="40" r="4" fill="#fff"/>
+  <circle cx="40" cy="40" r="2" fill="#000"/>
+  <circle cx="56" cy="40" r="2" fill="#000"/>
+  <path d="M30 24L24 18" stroke="#1a202c" stroke-width="2"/>
+  <path d="M66 24L72 18" stroke="#1a202c" stroke-width="2"/>
+  <path d="M30 60L24 66" stroke="#1a202c" stroke-width="2"/>
+  <path d="M66 60L72 66" stroke="#1a202c" stroke-width="2"/>
+  <path d="M24 36L18 36" stroke="#1a202c" stroke-width="2"/>
+  <path d="M78 36L72 36" stroke="#1a202c" stroke-width="2"/>
+  <path d="M24 54L18 54" stroke="#1a202c" stroke-width="2"/>
+  <path d="M78 54L72 54" stroke="#1a202c" stroke-width="2"/>
 </svg>
