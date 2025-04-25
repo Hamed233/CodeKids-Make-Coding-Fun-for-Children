@@ -6,18 +6,20 @@
 </div>
 
 CodeKids is an interactive web-based educational platform designed to make coding accessible and enjoyable for children. Using a visual, block-based programming approach, CodeKids allows young learners to understand programming concepts without the barriers of syntax and typing.
-
-## 📸 Screenshots
+ 
+## 📸 Some Screenshots
 
 <div align="center">
   <img src="/client/public/images/screenshots/home-page.png" alt="Home Page" width="80%" />
-  <p><em>Home Page with challenges and achievements</em></p>
   
   <img src="/client/public/images/screenshots/challenge-page.png" alt="Challenge Page" width="80%" />
-  <p><em>Challenge page with visual code blocks</em></p>
   
-  <img src="/client/public/images/screenshots/auth-page.png" alt="Login Page" width="80%" />
-  <p><em>Authentication page for user login and registration</em></p>
+  <img src="/client/public/images/screenshots/achievements-page.png" alt="achievements Page" width="80%" />
+
+  <img src="/client/public/images/screenshots/help-page.png" alt="help Page" width="80%" />
+
+  <img src="/client/public/images/screenshots/profile-page.png" alt="profile Page" width="80%" />
+  <img src="/client/public/images/screenshots/settings-page.png" alt="settings Page" width="80%" />
 </div>
 
 ## 🌟 Features
@@ -41,7 +43,7 @@ CodeKids is an interactive web-based educational platform designed to make codin
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/codekids.git
+   git clone https://github.com/Hamed233/CodeKids-Make-Coding-Fun-for-Children.git
    cd codekids
    ```
 
@@ -152,9 +154,9 @@ The application uses a relational database with the following main tables:
 Contributions are welcome! Please feel free to submit a Pull Request.
 
 1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
+2. Create your feature branch (`git checkout -b fix/home-page`)
+3. Commit your changes (`git commit -m 'fix bug ...'`)
+4. Push to the branch (`git push origin fix/home-page`)
 5. Open a Pull Request
 
 ## 📄 License
@@ -172,5 +174,5 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ---
 
 <div align="center">
-  <p>Made with ❤️ for the coders of tomorrow</p>
+  <p>Made by Hamed Esam ❤️</p>
 </div>
