@@ -34,28 +34,31 @@ export function Header() {
   const userStars = Math.min(userLevel, 5);
 
   return (
-    <header className="bg-white shadow-md">
+    <header className="bg-white border-b border-border z-10 sticky top-0">
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         <div className="flex items-center">
           <Link href="/">
-            <div className="flex items-center cursor-pointer">
-              <div className="text-3xl text-primary font-bold font-baloo mr-2">
-                <i className="ri-code-box-line"></i>
+            <div className="flex items-center cursor-pointer group">
+              <div className="text-3xl text-primary font-bold font-baloo mr-2 group-hover:text-primary/80 transition-colors duration-200">
+                <i className="ri-code-box-fill"></i>
               </div>
-              <h1 className="text-2xl font-bold font-baloo text-primary">CodeKids</h1>
+              <h1 className="text-2xl font-bold font-baloo text-primary group-hover:text-primary/90 transition-colors duration-200">
+                <span>Code</span>
+                <span className="text-secondary">Kids</span>
+              </h1>
             </div>
           </Link>
         </div>
         
         {/* Navigation */}
-        <nav className="hidden md:flex items-center space-x-6">
+        <nav className="hidden md:flex items-center space-x-2">
           {navLinks.map((link) => (
             <Link key={link.path} href={link.path}>
               <div 
-                className={`font-semibold text-lg transition-colors duration-200 cursor-pointer ${
+                className={`font-medium px-3 py-2 rounded-md transition-all duration-200 cursor-pointer ${
                   location === link.path 
-                    ? "text-primary" 
-                    : "text-gray-700 hover:text-primary"
+                    ? "text-primary bg-primary/5 shadow-sm" 
+                    : "text-foreground/80 hover:text-primary hover:bg-primary/5"
                 }`}
               >
                 {link.name}
@@ -68,33 +71,30 @@ export function Header() {
         <div className="flex items-center">
           {user ? (
             <>
-              <div className="hidden md:block mr-4">
-                <div className="font-semibold text-gray-700 font-nunito">
-                  {user.displayName || user.username}
+              <div className="hidden md:flex items-center bg-muted/40 rounded-full px-3 py-1 mr-2">
+                <div className="flex items-center text-yellow-500 mr-1.5">
+                  {[...Array(5)].map((_, i) => (
+                    <i 
+                      key={i} 
+                      className={`ri-star-${i < userStars ? 'fill' : 'line'} text-sm`}
+                    ></i>
+                  ))}
                 </div>
-                <div className="flex">
-                  <div className="flex items-center text-yellow-500">
-                    {[...Array(5)].map((_, i) => (
-                      <i 
-                        key={i} 
-                        className={`ri-star-${i < userStars ? 'fill' : 'line'} text-sm`}
-                      ></i>
-                    ))}
-                  </div>
-                  <span className="text-xs ml-1 text-gray-500">Level {userLevel}</span>
-                </div>
+                <span className="text-xs text-foreground/70 font-medium">Level {userLevel}</span>
               </div>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="p-0 h-10 w-10 rounded-full">
-                    <div className="w-10 h-10 rounded-full bg-accent flex items-center justify-center text-white font-bold">
+                  <Button variant="ghost" className="p-0 h-10 w-10 rounded-full relative group">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-bold ring-2 ring-background shadow-sm group-hover:shadow-md transition-all duration-200">
                       {userInitial}
                     </div>
+                    <span className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></span>
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-56">
-                  <div className="px-2 py-1.5 text-sm font-medium">
-                    {user.displayName || user.username}
+                  <div className="px-3 py-2 text-sm font-medium flex flex-col">
+                    <span className="text-foreground font-semibold">{user.displayName || user.username}</span>
+                    <span className="text-xs text-muted-foreground mt-0.5">Student</span>
                   </div>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem className="cursor-pointer" onClick={() => navigate("/profile")}>
@@ -106,7 +106,7 @@ export function Header() {
                     <span>Settings</span>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem className="cursor-pointer text-red-500 focus:text-red-500" onClick={handleLogout}>
+                  <DropdownMenuItem className="cursor-pointer text-destructive focus:text-destructive" onClick={handleLogout}>
                     <LogOut className="mr-2 h-4 w-4" />
                     <span>Log out</span>
                   </DropdownMenuItem>
@@ -114,9 +114,24 @@ export function Header() {
               </DropdownMenu>
             </>
           ) : (
-            <Button variant="default" size="sm" onClick={() => navigate("/auth")}>
-              Log in
-            </Button>
+            <div className="flex items-center space-x-2">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={() => navigate("/auth")}
+                className="font-medium"
+              >
+                Sign up
+              </Button>
+              <Button 
+                variant="default" 
+                size="sm" 
+                onClick={() => navigate("/auth")}
+                className="font-medium bg-primary"
+              >
+                Log in
+              </Button>
+            </div>
           )}
         </div>
       </div>
