@@ -5,7 +5,9 @@ import {
   type UserAchievement, type InsertUserAchievement, type UserChallengeProgress, type InsertUserChallengeProgress
 } from "@shared/schema";
 import session from "express-session";
-import createMemoryStore from "memorystore";
+import connectPg from "connect-pg-simple";
+import { db, pool } from "./db";
+import { eq, and } from "drizzle-orm";
 
 export interface IStorage {
   // User methods
@@ -44,102 +46,76 @@ export interface IStorage {
   getUserAchievements(userId: number): Promise<UserAchievement[]>;
   unlockAchievement(userId: number, achievementId: number): Promise<UserAchievement>;
   
-  // Session store for authentication
+  // Session store
   sessionStore: session.Store;
 }
 
-export class MemStorage implements IStorage {
-  private users = new Map<number, User>();
-  private lessons = new Map<number, Lesson>();
-  private lessonProgress = new Map<string, LessonProgress>();
-  private challenges = new Map<number, Challenge>();
-  private userChallengeProgress = new Map<string, UserChallengeProgress>();
-  private achievements = new Map<number, Achievement>();
-  private userAchievements = new Map<string, UserAchievement>();
-  
-  private currentUserId = 1;
-  private currentLessonId = 1;
-  private currentLessonProgressId = 1;
-  private currentChallengeId = 1;
-  private currentUserChallengeProgressId = 1;
-  private currentAchievementId = 1;
-  private currentUserAchievementId = 1;
-  
-  // Session store for authentication
+export class DatabaseStorage implements IStorage {
   public sessionStore: session.Store;
   
   constructor() {
-    const MemoryStore = createMemoryStore(session);
-    this.sessionStore = new MemoryStore({
-      checkPeriod: 86400000, // Clear expired sessions every 24 hours
+    const PostgresSessionStore = connectPg(session);
+    this.sessionStore = new PostgresSessionStore({ 
+      pool,
+      createTableIfMissing: true 
     });
   }
 
   // User methods
   async getUser(id: number): Promise<User | undefined> {
-    return this.users.get(id);
+    const result = await db.select().from(users).where(eq(users.id, id));
+    return result[0];
   }
 
   async getUserByUsername(username: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(
-      (user) => user.username === username,
-    );
+    const result = await db.select().from(users).where(eq(users.username, username));
+    return result[0];
   }
 
   async createUser(insertUser: InsertUser): Promise<User> {
-    const id = this.currentUserId++;
-    const now = new Date();
-    const user: User = { ...insertUser, id, level: 1, points: 0, createdAt: now };
-    this.users.set(id, user);
-    return user;
+    const result = await db.insert(users).values(insertUser).returning();
+    return result[0];
   }
 
   // Lesson methods
   async getLesson(id: number): Promise<Lesson | undefined> {
-    return this.lessons.get(id);
+    const result = await db.select().from(lessons).where(eq(lessons.id, id));
+    return result[0];
   }
 
   async getAllLessons(): Promise<Lesson[]> {
-    return Array.from(this.lessons.values()).sort((a, b) => a.order - b.order);
+    return db.select().from(lessons).orderBy(lessons.order);
   }
 
-  async createLesson(insertLesson: InsertLesson): Promise<Lesson> {
-    const id = this.currentLessonId++;
-    const lesson: Lesson = { ...insertLesson, id };
-    this.lessons.set(id, lesson);
-    return lesson;
+  async createLesson(lesson: InsertLesson): Promise<Lesson> {
+    const result = await db.insert(lessons).values(lesson).returning();
+    return result[0];
   }
 
   // Lesson Progress methods
   async getUserLessonProgress(userId: number): Promise<LessonProgress[]> {
-    return Array.from(this.lessonProgress.values()).filter(
-      (progress) => progress.userId === userId
-    );
+    return db.select().from(lessonProgress).where(eq(lessonProgress.userId, userId));
   }
 
   async getUserLessonProgressByLesson(userId: number, lessonId: number): Promise<LessonProgress | undefined> {
-    const key = `${userId}-${lessonId}`;
-    return this.lessonProgress.get(key);
+    const result = await db.select().from(lessonProgress).where(
+      and(
+        eq(lessonProgress.userId, userId),
+        eq(lessonProgress.lessonId, lessonId)
+      )
+    );
+    return result[0];
   }
 
-  async createLessonProgress(insertProgress: InsertLessonProgress): Promise<LessonProgress> {
-    const id = this.currentLessonProgressId++;
-    const now = new Date();
-    const progress: LessonProgress = { ...insertProgress, id, lastUpdated: now };
-    
-    // Use composite key for faster lookup
-    const key = `${insertProgress.userId}-${insertProgress.lessonId}`;
-    this.lessonProgress.set(key, progress);
-    
-    return progress;
+  async createLessonProgress(progress: InsertLessonProgress): Promise<LessonProgress> {
+    const result = await db.insert(lessonProgress).values(progress).returning();
+    return result[0];
   }
 
   async updateLessonProgress(userId: number, lessonId: number, currentStep: number, completed = false): Promise<LessonProgress> {
-    const key = `${userId}-${lessonId}`;
-    const existing = this.lessonProgress.get(key);
+    const existing = await this.getUserLessonProgressByLesson(userId, lessonId);
     
     if (!existing) {
-      // Create new progress if it doesn't exist
       return this.createLessonProgress({
         userId,
         lessonId,
@@ -148,65 +124,62 @@ export class MemStorage implements IStorage {
       });
     }
     
-    // Update existing progress
-    const now = new Date();
-    const updated: LessonProgress = {
-      ...existing,
-      currentStep,
-      completed: completed || existing.completed,
-      lastUpdated: now
-    };
+    const result = await db.update(lessonProgress)
+      .set({ 
+        currentStep, 
+        completed: completed || existing.completed,
+        lastUpdated: new Date()
+      })
+      .where(
+        and(
+          eq(lessonProgress.userId, userId),
+          eq(lessonProgress.lessonId, lessonId)
+        )
+      )
+      .returning();
     
-    this.lessonProgress.set(key, updated);
-    return updated;
+    return result[0];
   }
 
   // Challenge methods
   async getChallenge(id: number): Promise<Challenge | undefined> {
-    return this.challenges.get(id);
+    const result = await db.select().from(challenges).where(eq(challenges.id, id));
+    return result[0];
   }
 
   async getAllChallenges(): Promise<Challenge[]> {
-    return Array.from(this.challenges.values()).sort((a, b) => a.order - b.order);
+    return db.select().from(challenges).orderBy(challenges.order);
   }
 
-  async createChallenge(insertChallenge: InsertChallenge): Promise<Challenge> {
-    const id = this.currentChallengeId++;
-    const challenge: Challenge = { ...insertChallenge, id };
-    this.challenges.set(id, challenge);
-    return challenge;
+  async createChallenge(challenge: InsertChallenge): Promise<Challenge> {
+    const result = await db.insert(challenges).values(challenge).returning();
+    return result[0];
   }
 
   // User Challenge Progress methods
   async getUserChallengeProgress(userId: number): Promise<UserChallengeProgress[]> {
-    return Array.from(this.userChallengeProgress.values()).filter(
-      (progress) => progress.userId === userId
-    );
+    return db.select().from(userChallengeProgress).where(eq(userChallengeProgress.userId, userId));
   }
 
   async getUserChallengeProgressByChallenge(userId: number, challengeId: number): Promise<UserChallengeProgress | undefined> {
-    const key = `${userId}-${challengeId}`;
-    return this.userChallengeProgress.get(key);
+    const result = await db.select().from(userChallengeProgress).where(
+      and(
+        eq(userChallengeProgress.userId, userId),
+        eq(userChallengeProgress.challengeId, challengeId)
+      )
+    );
+    return result[0];
   }
 
-  async createUserChallengeProgress(insertProgress: InsertUserChallengeProgress): Promise<UserChallengeProgress> {
-    const id = this.currentUserChallengeProgressId++;
-    const now = new Date();
-    const progress: UserChallengeProgress = { ...insertProgress, id, lastUpdated: now };
-    
-    // Use composite key for faster lookup
-    const key = `${insertProgress.userId}-${insertProgress.challengeId}`;
-    this.userChallengeProgress.set(key, progress);
-    
-    return progress;
+  async createUserChallengeProgress(progress: InsertUserChallengeProgress): Promise<UserChallengeProgress> {
+    const result = await db.insert(userChallengeProgress).values(progress).returning();
+    return result[0];
   }
 
   async updateChallengeProgress(userId: number, challengeId: number, completed = false, starsEarned = 0): Promise<UserChallengeProgress> {
-    const key = `${userId}-${challengeId}`;
-    const existing = this.userChallengeProgress.get(key);
+    const existing = await this.getUserChallengeProgressByChallenge(userId, challengeId);
     
     if (!existing) {
-      // Create new progress if it doesn't exist
       return this.createUserChallengeProgress({
         userId,
         challengeId,
@@ -215,64 +188,64 @@ export class MemStorage implements IStorage {
       });
     }
     
-    // Update existing progress
-    const now = new Date();
-    const updated: UserChallengeProgress = {
-      ...existing,
-      completed: completed || existing.completed,
-      starsEarned: starsEarned !== undefined ? starsEarned : existing.starsEarned,
-      lastUpdated: now
-    };
+    const result = await db.update(userChallengeProgress)
+      .set({ 
+        completed: completed || existing.completed, 
+        starsEarned: (starsEarned !== undefined) ? starsEarned : existing.starsEarned,
+        lastUpdated: new Date()
+      })
+      .where(
+        and(
+          eq(userChallengeProgress.userId, userId),
+          eq(userChallengeProgress.challengeId, challengeId)
+        )
+      )
+      .returning();
     
-    this.userChallengeProgress.set(key, updated);
-    return updated;
+    return result[0];
   }
 
   // Achievement methods
   async getAchievement(id: number): Promise<Achievement | undefined> {
-    return this.achievements.get(id);
+    const result = await db.select().from(achievements).where(eq(achievements.id, id));
+    return result[0];
   }
 
   async getAllAchievements(): Promise<Achievement[]> {
-    return Array.from(this.achievements.values());
+    return db.select().from(achievements);
   }
 
-  async createAchievement(insertAchievement: InsertAchievement): Promise<Achievement> {
-    const id = this.currentAchievementId++;
-    const achievement: Achievement = { ...insertAchievement, id };
-    this.achievements.set(id, achievement);
-    return achievement;
+  async createAchievement(achievement: InsertAchievement): Promise<Achievement> {
+    const result = await db.insert(achievements).values(achievement).returning();
+    return result[0];
   }
 
   // User Achievement methods
   async getUserAchievements(userId: number): Promise<UserAchievement[]> {
-    return Array.from(this.userAchievements.values()).filter(
-      (ua) => ua.userId === userId
-    );
+    return db.select().from(userAchievements).where(eq(userAchievements.userId, userId));
   }
 
   async unlockAchievement(userId: number, achievementId: number): Promise<UserAchievement> {
-    const key = `${userId}-${achievementId}`;
-    
     // Check if already unlocked
-    const existing = this.userAchievements.get(key);
-    if (existing) {
-      return existing;
+    const existing = await db.select().from(userAchievements).where(
+      and(
+        eq(userAchievements.userId, userId),
+        eq(userAchievements.achievementId, achievementId)
+      )
+    );
+    
+    if (existing.length > 0) {
+      return existing[0];
     }
     
     // Create new achievement unlock
-    const id = this.currentUserAchievementId++;
-    const now = new Date();
-    const userAchievement: UserAchievement = {
-      id,
+    const result = await db.insert(userAchievements).values({
       userId,
       achievementId,
-      unlockedAt: now
-    };
+    }).returning();
     
-    this.userAchievements.set(key, userAchievement);
-    return userAchievement;
+    return result[0];
   }
 }
 
-export const storage = new MemStorage();
+export const storage = new DatabaseStorage();
