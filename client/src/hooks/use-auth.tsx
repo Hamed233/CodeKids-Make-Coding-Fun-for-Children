@@ -43,6 +43,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         title: "Welcome back!",
         description: `Welcome back, ${user.displayName || user.username}!`,
       });
+      window.location.href = '/';
     },
     onError: (error: Error) => {
       toast({
@@ -64,6 +65,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         title: "Registration successful",
         description: `Welcome to CodeKids, ${user.displayName || user.username}!`,
       });
+      window.location.href = '/';
     },
     onError: (error: Error) => {
       toast({
@@ -84,6 +86,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         title: "Logged out",
         description: "You have been logged out successfully",
       });
+      window.location.href = '/auth';
     },
     onError: (error: Error) => {
       toast({
