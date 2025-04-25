@@ -155,35 +155,59 @@ export default function ChallengePage() {
         </CardContent>
       </Card>
       
-      {/* Workspace, Blocks, and Preview */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-        <div className="lg:col-span-2">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div>
-              <h2 className="text-xl font-bold mb-4">Code Workspace</h2>
+      {/* Main workspace area */}
+      <div className="flex flex-col lg:flex-row gap-6 mb-6">
+        {/* Left sidebar with blocks */}
+        <div className="w-full lg:w-1/4">
+          <Card className="h-full">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-xl text-primary">Blocks Library</CardTitle>
+              <CardDescription>Drag blocks to build your solution</CardDescription>
+            </CardHeader>
+            <CardContent className="pt-2">
+              <BlocksPanel onDragStart={(block) => {
+                // This is just to handle the drag start event
+                console.log("Block dragged:", block);
+              }} />
+            </CardContent>
+          </Card>
+        </div>
+        
+        {/* Center workspace */}
+        <div className="w-full lg:w-2/5">
+          <Card className="h-full">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-xl text-primary">Workspace</CardTitle>
+              <CardDescription>
+                Arrange your blocks here and click "Run" to test
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="pt-2">
               <CodeWorkspace 
                 onRun={handleRun} 
                 initialBlocks={blocks.length ? blocks : undefined} 
               />
-            </div>
-            
-            <div>
-              <h2 className="text-xl font-bold mb-4">Preview</h2>
+            </CardContent>
+          </Card>
+        </div>
+        
+        {/* Right side preview */}
+        <div className="w-full lg:w-1/3">
+          <Card className="h-full">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-xl text-primary">Preview</CardTitle>
+              <CardDescription>
+                See your code in action
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="pt-2">
               <PreviewPanel 
                 blocks={blocks} 
                 isRunning={isRunning} 
                 instructions={challenge.goalDescription} 
               />
-            </div>
-          </div>
-        </div>
-        
-        <div className="lg:col-span-1">
-          <h2 className="text-xl font-bold mb-4">Blocks</h2>
-          <BlocksPanel onDragStart={(block) => {
-            // This is just to handle the drag start event
-            console.log("Block dragged:", block);
-          }} />
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>

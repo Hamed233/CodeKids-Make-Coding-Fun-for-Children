@@ -83,31 +83,38 @@ export function BlocksPanel({ onDragStart }: BlocksPanelProps) {
   };
 
   return (
-    <div className="w-full lg:w-1/4 bg-white rounded-2xl shadow-md p-4 blocks-panel">
-      <h3 className="font-baloo text-xl font-bold mb-4 text-gray-800">Blocks</h3>
-      
-      <div className="space-y-2">
+    <div className="w-full blocks-panel overflow-y-auto max-h-[600px]">
+      <div className="space-y-3">
         {Object.entries(categories).map(([category, blocks]) => (
-          <div key={category} className={`${getCategoryBackground(category)} rounded-xl p-3`}>
-            <h4 
-              className={`font-baloo font-semibold ${getCategoryTextColor(category)} mb-2 cursor-pointer flex items-center justify-between`}
+          <div key={category} className={`${getCategoryBackground(category)} rounded-lg p-3`}>
+            <button
+              type="button"
+              className={`font-baloo font-semibold ${getCategoryTextColor(category)} w-full text-left cursor-pointer flex items-center justify-between mb-2`}
               onClick={() => toggleCategory(category)}
+              aria-expanded={expandedCategories[category]}
             >
-              <span className="capitalize">{category}</span>
-              <i className={`ri-arrow-${expandedCategories[category] ? 'down' : 'right'}-s-line`}></i>
-            </h4>
+              <span className="capitalize flex items-center">
+                {category === "motion" && <i className="ri-arrow-right-line mr-2"></i>}
+                {category === "looks" && <i className="ri-eye-line mr-2"></i>}
+                {category === "control" && <i className="ri-loop-left-line mr-2"></i>}
+                {category === "events" && <i className="ri-alarm-line mr-2"></i>}
+                {category === "operators" && <i className="ri-code-line mr-2"></i>}
+                {category}
+              </span>
+              <i className={`ri-arrow-${expandedCategories[category] ? 'down' : 'right'}-s-fill`}></i>
+            </button>
             
             {expandedCategories[category] && (
-              <div className="space-y-2">
+              <div className="space-y-2 pl-2">
                 {blocks.map((block) => (
                   <div
                     key={block.id}
-                    className={`block block-${block.category} text-white p-3 rounded-xl`}
+                    className={`block block-${block.category} text-white p-3 rounded-lg text-sm shadow-sm transition-all duration-200 hover:scale-[1.02]`}
                     draggable="true"
                     onDragStart={(e) => handleDragStart(e, block)}
                   >
                     <div className="flex items-center">
-                      <i className={`${block.icon} mr-2`}></i>
+                      <i className={`${block.icon} mr-2 text-lg`}></i>
                       <span>{block.text}</span>
                     </div>
                   </div>

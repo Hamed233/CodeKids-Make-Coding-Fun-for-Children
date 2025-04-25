@@ -73,32 +73,46 @@ export function PreviewPanel({ blocks, isRunning, instructions }: PreviewPanelPr
   }, [isRunning, blocks]);
 
   return (
-    <div className="w-full lg:w-1/3 bg-white rounded-2xl shadow-md p-4 preview-panel">
-      <h3 className="font-baloo text-xl font-bold mb-4 text-gray-800">Preview</h3>
-      
-      <div className="bg-primary/5 rounded-xl p-4 min-h-[400px] relative" ref={canvasRef}>
+    <div className="w-full h-full">
+      <div 
+        className="bg-gradient-to-b from-primary/5 to-white rounded-lg p-4 min-h-[350px] relative border border-border drop-shadow-sm" 
+        ref={canvasRef}
+      >
+        <div className="grid grid-cols-6 gap-2 opacity-20 absolute inset-0 pointer-events-none">
+          {[...Array(36)].map((_, i) => (
+            <div key={i} className="border-b border-r border-primary/10"></div>
+          ))}
+        </div>
+        
         <div className="absolute bottom-10 left-1/2" ref={characterRef} style={{ transform: "translate(-50%, 0)" }}>
           <img 
             src="https://img.icons8.com/color/96/000000/turtle.png" 
             alt="Turtle character" 
-            className="w-16 h-16"
+            className="w-16 h-16 drop-shadow-md transition-transform duration-300"
           />
           {speechBubble && (
-            <div className="bg-white rounded-lg px-2 py-1 shadow-md mt-2 text-center">
-              <span className="text-sm">{speechBubble}</span>
+            <div className="bg-white rounded-md px-3 py-1.5 shadow-md mt-2 text-center border border-gray-100 transition-all duration-300 animate-fade-in">
+              <span className="text-sm font-medium">{speechBubble}</span>
             </div>
           )}
         </div>
+        
+        {isRunning && (
+          <div className="absolute top-4 right-4 bg-primary/10 text-primary px-2 py-1 rounded-md text-xs font-medium animate-pulse">
+            Running...
+          </div>
+        )}
       </div>
       
       {instructions && (
         <div className="mt-4">
-          <h4 className="font-baloo font-semibold text-gray-700 mb-2">Instructions</h4>
-          <div className="bg-yellow/10 p-4 rounded-xl">
-            <p className="text-gray-700 font-nunito">
-              <i className="ri-lightbulb-line text-yellow mr-2"></i>
-              {instructions}
-            </p>
+          <div className="bg-secondary/10 p-3 rounded-md border border-secondary/20">
+            <div className="flex items-start">
+              <i className="ri-lightbulb-line text-secondary mr-2 mt-0.5"></i>
+              <p className="text-sm text-foreground/80 leading-relaxed">
+                {instructions}
+              </p>
+            </div>
           </div>
         </div>
       )}
