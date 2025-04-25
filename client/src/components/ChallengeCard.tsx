@@ -77,24 +77,25 @@ export function ChallengeCard({ challenge, progress }: ChallengeCardProps) {
             ))}
           </div>
           
-          <Link href={`/challenges/${id}`}>
-            <a className={`px-3 py-1.5 rounded-md text-sm font-medium 
+          <Link 
+            href={`/challenges/${id}`}
+            className={`px-3 py-1.5 rounded-md text-sm font-medium 
               ${isCompleted 
                 ? 'bg-accent/10 text-accent hover:bg-accent/20' 
                 : 'bg-primary/10 text-primary hover:bg-primary/20'
-              } transition-colors duration-200 flex items-center`}>
-              {isCompleted ? (
-                <>
-                  <i className="ri-eye-line mr-1.5"></i>
-                  <span>Review</span>
-                </>
-              ) : (
-                <>
-                  <i className="ri-play-fill mr-1.5"></i>
-                  <span>Start</span>
-                </>
-              )}
-            </a>
+              } transition-colors duration-200 flex items-center`}
+          >
+            {isCompleted ? (
+              <>
+                <i className="ri-eye-line mr-1.5"></i>
+                <span>Review</span>
+              </>
+            ) : (
+              <>
+                <i className="ri-play-fill mr-1.5"></i>
+                <span>Start</span>
+              </>
+            )}
           </Link>
         </div>
       </div>

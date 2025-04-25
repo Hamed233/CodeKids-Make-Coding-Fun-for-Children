@@ -132,11 +132,12 @@ export default function Home() {
                   </div>
                   
                   <div className="flex-shrink-0">
-                    <Link href={`/lessons/${currentLesson.id}`}>
-                      <a className="bg-gradient-to-r from-secondary to-secondary/90 text-white font-medium py-3 px-5 rounded-lg shadow-sm hover:shadow transition-all duration-200 flex items-center justify-center whitespace-nowrap">
-                        <span>Continue Learning</span>
-                        <i className="ri-arrow-right-line ml-2"></i>
-                      </a>
+                    <Link 
+                      href={`/lessons/${currentLesson.id}`}
+                      className="bg-gradient-to-r from-secondary to-secondary/90 text-white font-medium py-3 px-5 rounded-lg shadow-sm hover:shadow transition-all duration-200 flex items-center justify-center whitespace-nowrap"
+                    >
+                      <span>Continue Learning</span>
+                      <i className="ri-arrow-right-line ml-2"></i>
                     </Link>
                   </div>
                 </div>

@@ -45,31 +45,23 @@ export function Footer() {
             <h3 className="font-bold text-foreground mb-3">Links</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/">
-                  <a className="text-muted-foreground hover:text-primary transition-colors duration-200">
-                    Home
-                  </a>
+                <Link href="/" className="text-muted-foreground hover:text-primary transition-colors duration-200">
+                  Home
                 </Link>
               </li>
               <li>
-                <Link href="/challenges">
-                  <a className="text-muted-foreground hover:text-primary transition-colors duration-200">
-                    Challenges
-                  </a>
+                <Link href="/challenges" className="text-muted-foreground hover:text-primary transition-colors duration-200">
+                  Challenges
                 </Link>
               </li>
               <li>
-                <Link href="/achievements">
-                  <a className="text-muted-foreground hover:text-primary transition-colors duration-200">
-                    Achievements
-                  </a>
+                <Link href="/achievements" className="text-muted-foreground hover:text-primary transition-colors duration-200">
+                  Achievements
                 </Link>
               </li>
               <li>
-                <Link href="/help">
-                  <a className="text-muted-foreground hover:text-primary transition-colors duration-200">
-                    Help Center
-                  </a>
+                <Link href="/help" className="text-muted-foreground hover:text-primary transition-colors duration-200">
+                  Help Center
                 </Link>
               </li>
             </ul>
@@ -79,31 +71,23 @@ export function Footer() {
             <h3 className="font-bold text-foreground mb-3">Resources</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/parents">
-                  <a className="text-muted-foreground hover:text-primary transition-colors duration-200">
-                    For Parents
-                  </a>
+                <Link href="/parents" className="text-muted-foreground hover:text-primary transition-colors duration-200">
+                  For Parents
                 </Link>
               </li>
               <li>
-                <Link href="/teachers">
-                  <a className="text-muted-foreground hover:text-primary transition-colors duration-200">
-                    For Teachers
-                  </a>
+                <Link href="/teachers" className="text-muted-foreground hover:text-primary transition-colors duration-200">
+                  For Teachers
                 </Link>
               </li>
               <li>
-                <Link href="/privacy">
-                  <a className="text-muted-foreground hover:text-primary transition-colors duration-200">
-                    Privacy Policy
-                  </a>
+                <Link href="/privacy" className="text-muted-foreground hover:text-primary transition-colors duration-200">
+                  Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link href="/terms">
-                  <a className="text-muted-foreground hover:text-primary transition-colors duration-200">
-                    Terms of Service
-                  </a>
+                <Link href="/terms" className="text-muted-foreground hover:text-primary transition-colors duration-200">
+                  Terms of Service
                 </Link>
               </li>
             </ul>
@@ -115,15 +99,19 @@ export function Footer() {
             © {new Date().getFullYear()} CodeKids. All rights reserved.
           </p>
           <div className="mt-4 md:mt-0 flex items-center space-x-4">
-            <Link href="/help">
-              <div className="text-muted-foreground hover:text-primary transition-colors duration-200 cursor-pointer" title="Help">
-                <i className="ri-question-line text-lg"></i>
-              </div>
+            <Link 
+              href="/help"
+              className="text-muted-foreground hover:text-primary transition-colors duration-200 cursor-pointer"
+              title="Help"
+            >
+              <i className="ri-question-line text-lg"></i>
             </Link>
-            <Link href="/settings">
-              <div className="text-muted-foreground hover:text-primary transition-colors duration-200 cursor-pointer" title="Settings">
-                <i className="ri-settings-line text-lg"></i>
-              </div>
+            <Link 
+              href="/settings"
+              className="text-muted-foreground hover:text-primary transition-colors duration-200 cursor-pointer"
+              title="Settings"
+            >
+              <i className="ri-settings-line text-lg"></i>
             </Link>
           </div>
         </div>
