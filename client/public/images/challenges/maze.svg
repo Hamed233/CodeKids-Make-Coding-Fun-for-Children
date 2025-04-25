@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="96px" height="96px" viewBox="0 0 96 96" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <g id="maze-icon" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="background" fill="#4338CA" opacity="0.1" x="0" y="0" width="96" height="96" rx="12"></rect>
+        <path d="M72,16 L72,80 L16,80 L16,16 L72,16 Z M68,20 L20,20 L20,76 L68,76 L68,20 Z" id="frame" fill="#4338CA" fill-rule="nonzero"></path>
+        <path d="M68,24 L68,32 L60,32 L60,24 L68,24 Z M44,24 L44,32 L36,32 L36,40 L28,40 L28,48 L36,48 L36,56 L28,56 L28,64 L20,64 L20,56 L28,56 L28,48 L20,48 L20,40 L28,40 L28,32 L20,32 L20,24 L28,24 L28,32 L36,32 L36,24 L44,24 Z M60,24 L60,32 L52,32 L52,40 L44,40 L44,48 L52,48 L52,56 L44,56 L44,64 L36,64 L36,72 L28,72 L28,64 L36,64 L36,56 L44,56 L44,48 L36,48 L36,40 L44,40 L44,32 L52,32 L52,24 L60,24 Z M68,48 L68,56 L60,56 L60,48 L68,48 Z M44,64 L44,72 L36,72 L36,64 L44,64 Z M68,64 L68,72 L60,72 L60,64 L68,64 Z" id="maze" fill="#6366F1" fill-rule="nonzero"></path>
+        <circle id="player" fill="#F97316" cx="36" cy="28" r="4"></circle>
+        <circle id="goal" fill="#10B981" cx="60" cy="68" r="4"></circle>
+    </g>
+</svg>
