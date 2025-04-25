@@ -3,6 +3,7 @@ import { useParams, useLocation } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import { CodeWorkspace } from "@/components/CodeWorkspace";
 import { PreviewPanel } from "@/components/PreviewPanel";
+import { BlocksPanel } from "@/components/BlocksPanel";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/use-auth";
@@ -154,23 +155,35 @@ export default function ChallengePage() {
         </CardContent>
       </Card>
       
-      {/* Workspace and Preview */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-        <div>
-          <h2 className="text-xl font-bold mb-4">Code Workspace</h2>
-          <CodeWorkspace 
-            onRun={handleRun} 
-            initialBlocks={blocks.length ? blocks : undefined} 
-          />
+      {/* Workspace, Blocks, and Preview */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+        <div className="lg:col-span-2">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div>
+              <h2 className="text-xl font-bold mb-4">Code Workspace</h2>
+              <CodeWorkspace 
+                onRun={handleRun} 
+                initialBlocks={blocks.length ? blocks : undefined} 
+              />
+            </div>
+            
+            <div>
+              <h2 className="text-xl font-bold mb-4">Preview</h2>
+              <PreviewPanel 
+                blocks={blocks} 
+                isRunning={isRunning} 
+                instructions={challenge.goalDescription} 
+              />
+            </div>
+          </div>
         </div>
         
-        <div>
-          <h2 className="text-xl font-bold mb-4">Preview</h2>
-          <PreviewPanel 
-            blocks={blocks} 
-            isRunning={isRunning} 
-            instructions={challenge.goalDescription} 
-          />
+        <div className="lg:col-span-1">
+          <h2 className="text-xl font-bold mb-4">Blocks</h2>
+          <BlocksPanel onDragStart={(block) => {
+            // This is just to handle the drag start event
+            console.log("Block dragged:", block);
+          }} />
         </div>
       </div>
     </div>
