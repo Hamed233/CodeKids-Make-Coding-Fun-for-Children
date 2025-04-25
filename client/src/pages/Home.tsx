@@ -154,10 +154,11 @@ export default function Home() {
           <div className="mb-14">
             <div className="flex justify-between items-center mb-6">
               <h3 className="font-bold text-2xl text-foreground">Recommended Challenges</h3>
-              <Link href="/challenges">
-                <a className="text-primary font-medium flex items-center hover:underline text-sm">
-                  View All Challenges <i className="ri-arrow-right-s-line ml-1"></i>
-                </a>
+              <Link 
+                href="/challenges"
+                className="text-primary font-medium flex items-center hover:underline text-sm"
+              >
+                View All Challenges <i className="ri-arrow-right-s-line ml-1"></i>
               </Link>
             </div>
             
@@ -192,10 +193,11 @@ export default function Home() {
           <div className="mt-14">
             <div className="flex justify-between items-center mb-6">
               <h3 className="font-bold text-2xl text-foreground">Your Achievements</h3>
-              <Link href="/achievements">
-                <a className="text-primary font-medium flex items-center hover:underline text-sm">
-                  View All <i className="ri-arrow-right-s-line ml-1"></i>
-                </a>
+              <Link 
+                href="/achievements"
+                className="text-primary font-medium flex items-center hover:underline text-sm"
+              >
+                View All <i className="ri-arrow-right-s-line ml-1"></i>
               </Link>
             </div>
             
