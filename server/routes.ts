@@ -179,6 +179,31 @@ export async function registerRoutes(app: Express): Promise<Server> {
       return res.status(500).json({ message: "Server error" });
     }
   });
+  
+  app.get("/api/me/challenges/:id", async (req, res) => {
+    try {
+      // Mock user ID for demo
+      const userId = 1;
+      const challengeId = parseInt(req.params.id);
+      
+      const progress = await storage.getUserChallengeProgressByChallenge(userId, challengeId);
+      
+      if (!progress) {
+        // Create default progress if it doesn't exist
+        const newProgress = await storage.createUserChallengeProgress({
+          userId,
+          challengeId,
+          completed: false,
+          starsEarned: 0
+        });
+        return res.json(newProgress);
+      }
+      
+      return res.json(progress);
+    } catch (error) {
+      return res.status(500).json({ message: "Server error" });
+    }
+  });
 
   app.patch("/api/me/challenges/:id", async (req, res) => {
     try {
@@ -190,6 +215,39 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const schema = z.object({
         completed: z.boolean().optional(),
         starsEarned: z.number().int().min(0).max(3).optional()
+      });
+      
+      const validatedData = schema.parse(req.body);
+      
+      // Update progress
+      const updatedProgress = await storage.updateChallengeProgress(
+        userId,
+        challengeId,
+        validatedData.completed,
+        validatedData.starsEarned
+      );
+      
+      return res.json(updatedProgress);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const validationError = fromZodError(error);
+        return res.status(400).json({ message: validationError.message });
+      }
+      return res.status(500).json({ message: "Server error" });
+    }
+  });
+
+  // Complete challenge route
+  app.post("/api/me/challenges/:id/complete", async (req, res) => {
+    try {
+      // Mock user ID for demo
+      const userId = 1;
+      const challengeId = parseInt(req.params.id);
+      
+      // Validate request body
+      const schema = z.object({
+        completed: z.boolean().default(true),
+        starsEarned: z.number().int().min(0).max(3).default(3)
       });
       
       const validatedData = schema.parse(req.body);
