@@ -348,7 +348,7 @@ async function initializeSampleData() {
         difficulty: "Beginner",
         initialBlocks: "[]",
         goalDescription: "Get to the end of the maze",
-        imageUrl: "https://img.icons8.com/color/96/000000/maze.png",
+        imageUrl: "/images/challenges/maze.svg",
         type: "maze",
         order: 1
       });
@@ -359,7 +359,7 @@ async function initializeSampleData() {
         difficulty: "Intermediate",
         initialBlocks: "[]",
         goalDescription: "Draw a colorful pattern",
-        imageUrl: "https://img.icons8.com/color/96/000000/drawing.png",
+        imageUrl: "/images/challenges/drawing.svg",
         type: "art",
         order: 2
       });
@@ -370,7 +370,7 @@ async function initializeSampleData() {
         difficulty: "Intermediate",
         initialBlocks: "[]",
         goalDescription: "Make a dinosaur jump over obstacles",
-        imageUrl: "https://img.icons8.com/color/96/000000/dinosaur.png",
+        imageUrl: "/images/challenges/dinosaur.svg",
         type: "game",
         order: 3
       });
@@ -381,7 +381,7 @@ async function initializeSampleData() {
         difficulty: "Advanced",
         initialBlocks: "[]",
         goalDescription: "Fix all the bugs to make the program work",
-        imageUrl: "https://img.icons8.com/color/96/000000/bug.png",
+        imageUrl: "/images/challenges/bug.svg",
         type: "puzzle",
         order: 4
       });
