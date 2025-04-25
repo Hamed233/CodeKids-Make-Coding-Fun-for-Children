@@ -1,0 +1,154 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700&family=Nunito:wght@400;500;600;700&display=swap');
+@import url('https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css');
+
+:root {
+  --background: 0 0% 98%;
+  --foreground: 20 14.3% 4.1%;
+  --muted: 60 4.8% 95.9%;
+  --muted-foreground: 25 5.3% 44.7%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 20 14.3% 4.1%;
+  --card: 0 0% 100%;
+  --card-foreground: 20 14.3% 4.1%;
+  --border: 20 5.9% 90%;
+  --input: 20 5.9% 90%;
+  --primary: 220 86% 56%;
+  --primary-foreground: 211 100% 99%;
+  --secondary: 30 100% 62%;
+  --secondary-foreground: 24 9.8% 10%;
+  --accent: 142 68% 59%;
+  --accent-foreground: 24 9.8% 10%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 60 9.1% 97.8%;
+  --ring: 20 14.3% 4.1%;
+  --radius: 0.5rem;
+  
+  /* Custom colors */
+  --purple: 270 62% 64%;
+  --teal: 174 49% 52%;
+  --yellow: 42 100% 70%;
+  --chart-1: var(--primary);
+  --chart-2: var(--secondary);
+  --chart-3: var(--accent);
+  --chart-4: var(--purple);
+  --chart-5: var(--teal);
+}
+
+.dark {
+  --background: 240 10% 3.9%;
+  --foreground: 0 0% 98%;
+  --muted: 240 3.7% 15.9%;
+  --muted-foreground: 240 5% 64.9%;
+  --popover: 240 10% 3.9%;
+  --popover-foreground: 0 0% 98%;
+  --card: 240 10% 3.9%;
+  --card-foreground: 0 0% 98%;
+  --border: 240 3.7% 15.9%;
+  --input: 240 3.7% 15.9%;
+  --primary: 220 86% 56%;
+  --primary-foreground: 211 100% 99%;
+  --secondary: 30 100% 62%;
+  --secondary-foreground: 0 0% 98%;
+  --accent: 142 68% 59%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+  --ring: 240 4.9% 83.9%;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-nunito antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-baloo font-bold;
+  }
+}
+
+@layer components {
+  .block {
+    @apply cursor-grab active:cursor-grabbing shadow-kid hover:shadow-kid-hover transition-all;
+  }
+
+  .block-motion {
+    @apply bg-primary text-white;
+  }
+
+  .block-looks {
+    @apply bg-purple text-white;
+  }
+
+  .block-control {
+    @apply bg-secondary text-white;
+  }
+
+  .block-events {
+    @apply bg-yellow text-foreground;
+  }
+
+  .block-operators {
+    @apply bg-teal text-white;
+  }
+
+  .badge {
+    @apply transition-transform duration-300 ease-in-out;
+  }
+
+  .badge:hover:not(.opacity-50) {
+    @apply transform scale-110;
+  }
+
+  .shadow-kid {
+    @apply shadow-[0_4px_0_0_rgba(0,0,0,0.1)];
+  }
+
+  .shadow-kid-hover {
+    @apply shadow-[0_6px_0_0_rgba(0,0,0,0.1)];
+  }
+}
+
+@font-face {
+  font-family: 'Baloo 2';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/baloo2/v14/wXK0E3kTposypRydzVT08g.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/nunito/v25/XRXI3I6Li01BKofiOc5wtlZ2di8HDLshRTM.woff2') format('woff2');
+}
+
+.blocklyMainBackground {
+  stroke: none !important;
+}
+
+.blocklyTrash {
+  opacity: 0.8;
+}
+
+.challenges-grid {
+  @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6;
+}
+
+.animate-bounce-slow {
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
