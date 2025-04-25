@@ -44,7 +44,7 @@ export interface IStorage {
   getUserAchievements(userId: number): Promise<UserAchievement[]>;
   unlockAchievement(userId: number, achievementId: number): Promise<UserAchievement>;
   
-  // Session store
+  // Session store for authentication
   sessionStore: session.Store;
 }
 
